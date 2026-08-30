@@ -1,0 +1,424 @@
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&family=Manrope:wght@500;600;700;800&display=swap');
+
+:root {
+  /* Surfaces & Containers */
+  --surface: #f7f9fb;
+  --surface-container-low: #f2f4f6;
+  --surface-container-lowest: #ffffff;
+  --surface-container-highest: #e0e3e5;
+  --surface-bright: rgba(247, 249, 251, 0.85);
+
+  /* Primary Gradient Colors */
+  --primary: #0058be;
+  --primary-container: #2170e4;
+  --on-primary: #ffffff;
+
+  /* Secondary */
+  --secondary-container: #b6ccff;
+  --on-secondary-container: #405682;
+
+  /* Text & Accents */
+  --on-surface: #191c1e;
+  --on-surface-variant: #5f6368; 
+  --outline-variant: rgba(194, 198, 214, 0.2);
+  --danger: #e74c3c;
+
+  /* Border Radius */
+  --rounded-md: 0.75rem; /* 12px */
+  --rounded-lg: 1rem;    /* 16px */
+  --rounded-xl: 1.5rem;  /* 24px */
+
+  /* Shadows */
+  --ambient-shadow: 0 20px 40px rgba(25, 28, 30, 0.06);
+  --inner-glow: inset 0 0 0 2px rgba(0, 88, 190, 0.15);
+}
+
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+body {
+  font-family: 'Inter', sans-serif;
+  background-color: var(--surface);
+  color: var(--on-surface);
+  height: 100vh;
+  overflow: hidden;
+  direction: rtl;
+}
+
+h1, h2, h3, h4, .display-txt {
+  font-family: 'Manrope', sans-serif;
+  color: var(--on-surface);
+  font-weight: 700;
+}
+
+.app-container {
+  display: flex;
+  height: 100vh;
+}
+
+/* Sidebar */
+.sidebar {
+  width: 260px;
+  background-color: var(--surface-container-low);
+  display: flex;
+  flex-direction: column;
+  padding: 24px 16px;
+  gap: 32px;
+  /* No explicit borders, defined by tonal shift between surface-container-low and surface */
+}
+
+.sidebar-header h2 {
+  font-size: 1.5rem; /* headline-sm equivalent */
+  padding-right: 12px;
+}
+
+.sidebar-nav {
+  list-style: none;
+  display: flex;
+  flex-direction: column;
+  gap: 8px; /* component gap */
+}
+
+.nav-btn {
+  width: 100%;
+  padding: 16px 20px;
+  background: transparent;
+  border: none;
+  text-align: right;
+  font-size: 1rem;
+  font-weight: 600;
+  font-family: 'Manrope', sans-serif;
+  cursor: pointer;
+  color: var(--on-surface-variant);
+  border-radius: var(--rounded-lg);
+  transition: all 0.2s ease;
+}
+
+.nav-btn:hover {
+  background-color: var(--outline-variant);
+  color: var(--on-surface);
+}
+
+.nav-btn.active {
+  background-color: var(--surface-container-lowest);
+  color: var(--primary);
+  box-shadow: 0 4px 12px rgba(25, 28, 30, 0.03); /* Subtle lift */
+}
+
+/* Main Content */
+.main-content {
+  flex: 1;
+  padding: 40px; /* Section margins */
+  overflow-y: auto;
+  background-color: var(--surface);
+}
+
+.content-section {
+  display: none;
+  animation: fadeIn 0.4s ease-out;
+}
+
+.content-section.active {
+  display: flex;
+  flex-direction: column;
+  gap: 32px; /* Gap between major areas */
+}
+
+@keyframes fadeIn {
+  from { opacity: 0; transform: translateY(8px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+.section-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.section-header h1 {
+  font-size: 2rem;
+  letter-spacing: -0.5px;
+}
+
+.section-header p {
+  color: var(--on-surface-variant);
+  font-size: 0.9rem;
+  margin-top: 4px;
+}
+
+/* Buttons */
+.primary-btn {
+  background: linear-gradient(135deg, var(--primary), var(--primary-container));
+  color: var(--on-primary);
+  border: none;
+  padding: 16px 24px;
+  border-radius: var(--rounded-lg);
+  font-weight: 700;
+  font-family: 'Manrope', sans-serif;
+  cursor: pointer;
+  box-shadow: 0 8px 16px rgba(0, 88, 190, 0.15);
+  transition: transform 0.2s ease, box-shadow 0.2s;
+}
+
+.primary-btn:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 12px 20px rgba(0, 88, 190, 0.2);
+}
+
+.primary-btn:active {
+  transform: translateY(0);
+}
+
+/* Inputs & Search */
+.search-bar input {
+  width: 100%;
+  max-width: 480px;
+  padding: 16px 20px;
+  background-color: var(--surface-container-highest);
+  border: 1px solid transparent; /* Ghost border is an alternative, here we use bg */
+  border-radius: var(--rounded-md);
+  outline: none;
+  font-size: 1rem;
+  font-family: 'Inter', sans-serif;
+  color: var(--on-surface);
+  transition: all 0.2s ease;
+}
+
+.search-bar input::placeholder {
+  color: var(--on-surface-variant);
+}
+
+.search-bar input:focus {
+  background-color: var(--surface-container-lowest);
+  border-color: var(--outline-variant);
+  box-shadow: var(--inner-glow);
+}
+
+/* Table Design (Card List style without lines) */
+.table-container {
+  width: 100%;
+}
+
+table {
+  width: 100%;
+  border-collapse: separate;
+  border-spacing: 0 8px; /* Forbid divider lines, separate by space */
+}
+
+th {
+  text-align: right;
+  padding: 0 20px 8px 20px;
+  color: var(--on-surface-variant);
+  font-size: 0.85rem;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+}
+
+tr.table-row {
+  background-color: var(--surface-container-lowest);
+  transition: transform 0.2s ease, box-shadow 0.2s ease;
+}
+
+tr.table-row:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 8px 16px rgba(25, 28, 30, 0.04);
+}
+
+tr.table-row td {
+  padding: 20px;
+  color: var(--on-surface);
+}
+
+tr.table-row td:first-child {
+  border-top-right-radius: var(--rounded-lg);
+  border-bottom-right-radius: var(--rounded-lg);
+}
+
+tr.table-row td:last-child {
+  border-top-left-radius: var(--rounded-lg);
+  border-bottom-left-radius: var(--rounded-lg);
+}
+
+/* Actions in Table */
+.action-btn {
+  background: transparent;
+  border: none;
+  font-weight: 600;
+  font-family: 'Inter', sans-serif;
+  font-size: 0.9rem;
+  cursor: pointer;
+  padding: 8px 16px;
+  border-radius: var(--rounded-md);
+  margin-left: 8px;
+  transition: all 0.2s ease;
+}
+
+.edit-btn { 
+  background-color: var(--secondary-container);
+  color: var(--on-secondary-container); 
+}
+.edit-btn:hover { 
+  filter: brightness(0.95);
+}
+
+.delete-btn { 
+  background-color: transparent;
+  color: var(--primary); /* Tertiary button style basically, or danger */
+}
+.delete-btn:hover { 
+  background-color: var(--outline-variant); 
+}
+
+/* Modal using Ambient Shadows and Glassmorphism */
+.modal {
+  display: none;
+  position: fixed;
+  z-index: 100;
+  left: 0;
+  top: 0;
+  width: 100%;
+  height: 100%;
+  align-items: center;
+  justify-content: center;
+  /* Glassmorphism background */
+  background-color: rgba(247, 249, 251, 0.5);
+  backdrop-filter: blur(8px);
+}
+
+.modal-content {
+  background-color: var(--surface-container-lowest);
+  width: 640px;
+  border-radius: var(--rounded-xl);
+  box-shadow: var(--ambient-shadow);
+  overflow: hidden;
+  border: 1px solid var(--outline-variant); /* Ghost border */
+  animation: scaleUp 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+@keyframes scaleUp {
+  from { opacity: 0; transform: scale(0.95) translateY(20px); }
+  to { opacity: 1; transform: scale(1) translateY(0); }
+}
+
+.modal-header {
+  padding: 32px 32px 16px 32px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.modal-header h2 {
+  font-size: 1.5rem;
+}
+
+.close-btn {
+  font-size: 28px;
+  cursor: pointer;
+  color: var(--on-surface-variant);
+  transition: color 0.2s;
+  line-height: 1;
+}
+
+.close-btn:hover {
+  color: var(--on-surface);
+}
+
+#productForm {
+  padding: 0 32px 32px 32px;
+}
+
+.form-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 16px;
+}
+
+.form-group.full-width {
+  grid-column: 1 / -1;
+}
+
+.form-group label {
+  display: block;
+  margin-bottom: 8px;
+  font-weight: 600;
+  font-size: 0.85rem;
+  color: var(--on-surface-variant);
+}
+
+.form-group input, .form-group textarea {
+  width: 100%;
+  padding: 14px 16px;
+  background-color: var(--surface-container-highest);
+  border: 1px solid transparent;
+  border-radius: var(--rounded-md);
+  outline: none;
+  font-family: 'Inter', sans-serif;
+  color: var(--on-surface);
+  transition: all 0.2s ease;
+}
+
+.form-group input:focus, .form-group textarea:focus {
+  background-color: var(--surface-container-lowest);
+  border-color: var(--outline-variant);
+  box-shadow: var(--inner-glow);
+}
+
+.form-actions {
+  margin-top: 32px;
+  display: flex;
+  justify-content: flex-end;
+  gap: 16px;
+  padding-top: 24px;
+}
+
+/* Secondary Button style for Cancel */
+.cancel-btn {
+  background-color: transparent;
+  color: var(--primary);
+  border: none;
+  padding: 16px 24px;
+  border-radius: var(--rounded-lg);
+  cursor: pointer;
+  font-weight: 700;
+  font-family: 'Manrope', sans-serif;
+  transition: background-color 0.2s;
+}
+
+.cancel-btn:hover { 
+  background-color: var(--outline-variant);
+}
+
+.save-btn {
+  background: linear-gradient(135deg, var(--primary), var(--primary-container));
+  color: var(--on-primary);
+  border: none;
+  padding: 16px 32px;
+  border-radius: var(--rounded-lg);
+  cursor: pointer;
+  font-weight: 700;
+  font-family: 'Manrope', sans-serif;
+  box-shadow: 0 8px 16px rgba(0, 88, 190, 0.15);
+  transition: transform 0.2s ease, box-shadow 0.2s;
+}
+
+.save-btn:hover { 
+  transform: translateY(-2px);
+  box-shadow: 0 12px 20px rgba(0, 88, 190, 0.2);
+}
+
+.save-btn:active {
+  transform: translateY(0);
+}
+
+/* Specific component tweaks */
+.badge-location {
+  background: var(--surface-container-highest);
+  padding: 4px 8px;
+  border-radius: var(--rounded-md);
+  font-size: 0.8rem;
+  color: var(--on-surface-variant);
+}

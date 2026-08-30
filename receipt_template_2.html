@@ -1,0 +1,166 @@
+<!DOCTYPE html>
+<html dir="rtl" lang="ar">
+
+<head>
+  <meta charset="utf-8" />
+  <meta content="width=device-width, initial-scale=1.0" name="viewport" />
+  <title>Reçu - {{RECEIPT_NUMBER}}</title>
+  <script src="assets/js/tailwind.min.js"></script>
+  <link
+    href="https://fonts.googleapis.com/css2?family=Public+Sans:wght@700;900&family=Inter:wght@400;500;700;800&display=swap"
+    rel="stylesheet">
+  <style>
+    :root {
+      --paper-width: 80mm;
+    }
+
+    body {
+      background: #e4e4e7;
+      font-family: Inter, system-ui, -apple-system, Segoe UI, Roboto, Arial, sans-serif;
+      color: #000;
+    }
+
+    .thermal-width {
+      width: 100%;
+      max-width: var(--paper-width);
+      margin: 0 auto;
+    }
+
+    .dashed-separator {
+      border-top: 1px dashed #000;
+    }
+
+    @page {
+      margin: 0;
+    }
+
+    @media print {
+      html, body {
+        width: 80mm;
+        margin: 0;
+        padding: 0;
+        background: #fff;
+      }
+
+      .thermal-width {
+        width: 100%;
+        margin: 0;
+        padding: 2px !important;
+        box-shadow: none !important;
+        border: none !important;
+        max-width: none !important;
+      }
+
+      .no-print {
+        display: none !important;
+      }
+
+      .shadow-xl {
+        box-shadow: none !important;
+      }
+    }
+  </style>
+</head>
+
+<body class="min-h-screen flex flex-col items-center py-8">
+  <main class="thermal-width bg-white p-2 shadow-xl border-t-8 border-black">
+    <!-- Brand Header -->
+    <section class="text-center mb-3">
+      <h1 class="font-black text-2xl tracking-tighter leading-none mb-1"
+        style="font-family: 'Public Sans', Inter, sans-serif;">
+        {{COMPANY_NAME}}
+      </h1>
+      <p class="text-[8px] font-bold text-zinc-600 mt-1">{{COMPANY_ADDRESS}}</p>
+      <p class="text-[8px] font-bold text-zinc-600">الهاتف: {{COMPANY_PHONE}}</p>
+    </section>
+
+    <div class="dashed-separator my-2"></div>
+
+    <!-- Meta -->
+    <section class="text-[8px] font-bold text-zinc-700 space-y-1 mb-2">
+      <div class="flex justify-between">
+        <span>وصل رقم</span>
+        <span class="font-black">{{RECEIPT_NUMBER}}</span>
+      </div>
+      <div class="flex justify-between">
+        <span>{{DATE}}</span>
+        <span>{{TIME}}</span>
+      </div>
+      <div class="flex justify-between">
+        <span>الزبون</span>
+        <span class="font-black">{{CLIENT_NAME}}</span>
+      </div>
+      <div class="flex justify-between">
+        <span>البائع</span>
+        <span class="font-black">{{SELLER_NAME}}</span>
+      </div>
+    </section>
+
+    <div class="dashed-separator my-2"></div>
+
+    <!-- Table Headers -->
+    <section class="mb-2">
+      <div class="grid grid-cols-12 text-[7px] font-black border-b border-black pb-1 mb-1">
+        <div class="col-span-2">المرجع</div>
+        <div class="col-span-4">البيان</div>
+        <div class="col-span-1 text-center">الكمية</div>
+        <div class="col-span-2 text-left">السعر</div>
+        <div class="col-span-3 text-left">المجموع</div>
+      </div>
+
+      <!-- Rows -->
+      <div class="space-y-2">
+        {{ITEMS_ROWS}}
+      </div>
+    </section>
+
+    <div class="dashed-separator my-2"></div>
+
+    <!-- Financial Summary -->
+    <section class="grid grid-cols-2 gap-x-4">
+      <!-- Left Column -->
+      <div class="space-y-1">
+        <div class="flex flex-col">
+          <span class="text-[6px] font-black uppercase text-zinc-500">عدد العناصر</span>
+          <span class="text-[9px] font-bold">{{ITEMS_COUNT}}</span>
+        </div>
+        <div class="flex flex-col">
+          <span class="text-[6px] font-black uppercase text-zinc-500">التخفيض</span>
+          <span class="text-[9px] font-bold">{{DISCOUNT}} DZD</span>
+        </div>
+        <div class="flex flex-col">
+          <span class="text-[6px] font-black uppercase text-zinc-500">الرصيد السابق</span>
+          <span class="text-[9px] font-bold">{{OLD_BALANCE}} DZD</span>
+        </div>
+        <div class="flex flex-col">
+          <span class="text-[6px] font-black uppercase text-zinc-500">المتبقي للدفع</span>
+          <span class="text-[9px] font-bold">{{RECEIPT_REST}} DZD</span>
+        </div>
+      </div>
+
+      <!-- Right Column -->
+      <div class="space-y-1 text-left">
+        <div class="flex flex-col">
+          <span class="text-[6px] font-black uppercase text-zinc-500">المجموع</span>
+          <span class="text-[9px] font-bold">{{TOTAL}}</span>
+        </div>
+        <div class="flex flex-col p-1 border border-black">
+          <span class="text-[7px] font-black uppercase">الصافي للدفع</span>
+          <span class="text-xs font-black">{{TOTAL}} DZD</span>
+        </div>
+        <div class="flex flex-col">
+          <span class="text-[6px] font-black uppercase text-zinc-500">المدفوع</span>
+          <span class="text-[9px] font-bold">{{PAID}} DZD</span>
+        </div>
+      </div>
+    </section>
+    <div class="dashed-separator my-2"></div>
+    <div class="text-center font-black text-xs">إجمالي الديون: {{REST}} DZD</div>
+
+    <div class="mt-4 text-center text-[8px] font-bold text-zinc-600">
+      شكراً لزيارتكم.
+    </div>
+  </main>
+</body>
+
+</html>

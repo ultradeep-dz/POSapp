@@ -1,0 +1,113 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+  <meta charset="UTF-8" />
+  <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Barcode Label</title>
+  <style>
+    @page { margin: 0; }
+    html, body { margin: 0; padding: 0; }
+    body { font-family: Arial, "Segoe UI", Tahoma, sans-serif; }
+
+    /* Label size close to your design */
+    .label {
+      width: 200px;
+      height: 100px;
+      position: relative;
+      box-sizing: border-box;
+      border: 1px solid #fff;
+      border-radius: 4px;
+      overflow: hidden;
+      background: #fff;
+    }
+
+    .name {
+      position: absolute;
+      top: 3px;
+      left: 6px;
+      right: 6px;
+      font-size: 10px;
+      font-weight: 800;
+      line-height: 12px;
+      text-align: center;
+      color: #000;
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
+    }
+
+    .barcode {
+      position: absolute;
+      top: 26px;
+      left: 5px;
+      right: 5px;
+      height: 30px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+    .barcode img {
+      max-width: 100%;
+      max-height: 100%;
+      image-rendering: pixelated;
+    }
+
+    .barcodeText {
+      position: absolute;
+      top: 55px;
+      left: 6px;
+      right: 6px;
+      font-size: 8px;
+      font-weight: 800;
+      text-align: center;
+      color: #000;
+      letter-spacing: 0.2px;
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
+    }
+
+    .price {
+      position: absolute;
+      bottom: 2px;
+      left: 6px;
+      right: 6px;
+      display: flex;
+      align-items: baseline;
+      justify-content: center;
+      gap: 6px;
+      text-align: center;
+    }
+    .price .type {
+      font-size: 8px;
+      font-weight: 900;
+      color: #0f172a;
+      padding: 1px 6px;
+      border: 1px solid #e2e8f0;
+      border-radius: 999px;
+      background: #f8fafc;
+    }
+    .price .value {
+      font-size: 11px;
+      font-weight: 900;
+      color: #000;
+      line-height: 12px;
+    }
+  </style>
+</head>
+<body>
+  <div class="label">
+    <div class="name">{{PRODUCT_NAME}}</div>
+    <div class="barcode">
+      <img src="{{BARCODE_IMAGE}}" alt="barcode" />
+    </div>
+    <div class="barcodeText">{{BARCODE_TEXT}}</div>
+    <div class="price">
+      <span class="type">{{PRICE_TYPE}}</span>
+      <span class="value">{{PRICE_TEXT}}</span>
+    </div>
+  </div>
+</body>
+</html>
+

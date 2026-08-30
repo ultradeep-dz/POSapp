@@ -1,0 +1,123 @@
+<!DOCTYPE html>
+<html lang="fr" dir="ltr">
+
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Reçu - {{RECEIPT_NUMBER}}</title>
+  <script src="assets/js/tailwind.min.js"></script>
+  <style>
+    body {
+      background: #f3f4f6;
+      color: #000;
+      margin: 0;
+      padding: 0;
+    }
+
+    .paper {
+      width: 100%;
+      max-width: 80mm;
+      background: #fff;
+      margin: 0 auto;
+      box-shadow: 0 10px 30px rgba(0, 0, 0, .08);
+      border: 1px solid #e5e7eb;
+      font-family: 'Cairo', 'Cairo', sans-serif;
+    }
+
+    @page {
+      margin: 0;
+    }
+
+    @media print {
+      html, body {
+        width: 80mm;
+        margin: 0;
+        padding: 0;
+        background: #fff;
+      }
+
+      .paper {
+        width: 100%;
+        margin: 0;
+        padding: 2px !important;
+        box-shadow: none;
+        border: none;
+        max-width: none;
+      }
+    }
+  </style>
+  <link href="assets/css/fonts.css" rel="stylesheet">
+</head>
+
+<body>
+  <main class="paper">
+    <!-- Header -->
+    <header class="text-center border-b-2 border-black pb-3 mb-4">
+      <div class="text-xl font-black">{{COMPANY_NAME}}</div>
+      <div class="text-xs font-bold text-slate-700 mt-1">{{COMPANY_ADDRESS}}</div>
+      <div class="text-xs font-bold text-slate-700 mt-1">Tél: {{COMPANY_PHONE}}</div>
+    </header>
+
+    <!-- Meta -->
+    <section class="text-sm font-bold mb-4 space-y-1">
+      <div class="flex justify-between">
+        <div class="font-black underline">Reçu N°</div>
+        <div class="font-black">{{RECEIPT_NUMBER}}</div>
+      </div>
+      <div class="flex justify-between text-xs">
+        <div>Le: {{DATE}}</div>
+        <div class="italic">Heure: {{TIME}}</div>
+      </div>
+      <div class="text-xs font-bold pt-2">Client: {{CLIENT_NAME}}</div>
+      <div class="text-xs font-bold">Vendeur: {{SELLER_NAME}}</div>
+    </section>
+
+    <!-- Items -->
+    <section class="mb-4">
+      <div class="grid grid-cols-12 gap-1 bg-slate-100 border border-black rounded-xl p-2 text-xs font-black">
+        <div class="col-span-2 text-center">Qté</div>
+        <div class="col-span-6 text-center">Articles</div>
+        <div class="col-span-2 text-center">P.U</div>
+        <div class="col-span-2 text-center">Total</div>
+      </div>
+
+      <div class="mt-2 border border-black rounded-xl overflow-hidden">
+        <table class="w-full text-xs">
+          <tbody>
+            {{ITEMS_ROWS}}
+          </tbody>
+        </table>
+      </div>
+    </section>
+
+    <!-- Totals -->
+    <section class="border-t-2 border-black pt-3 text-sm font-black space-y-2">
+      <div class="flex justify-between">
+        <div>Total:</div>
+        <div>{{TOTAL}}</div>
+      </div>
+      <div class="flex justify-between text-xs font-bold">
+        <div>Versement =</div>
+        <div>{{PAID}}</div>
+      </div>
+      <div class="flex justify-between text-[11px] font-bold text-slate-700 pt-1 border-t border-dashed mt-2 border-slate-300">
+        <div>ANCIEN SOLDE :</div>
+        <div>{{OLD_BALANCE}}</div>
+      </div>
+      <div class="flex justify-between text-[11px] font-bold text-slate-700">
+        <div>RESTE À PAYER :</div>
+        <div>{{RECEIPT_REST}}</div>
+      </div>
+      <div class="flex justify-between text-xs font-black pt-1">
+        <div>DETTE TOTALE :</div>
+        <div class="underline">{{REST}}</div>
+      </div>
+    </section>
+
+    <footer class="text-center text-xs font-bold text-slate-700 mt-6">
+      Merci pour votre visite.
+    </footer>
+  </main>
+</body>
+
+</html>

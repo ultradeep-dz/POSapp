@@ -1,0 +1,134 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+
+<head>
+  <meta charset="utf-8" />
+  <meta content="width=device-width, initial-scale=1.0" name="viewport" />
+  <title>Receipt - {{RECEIPT_NUMBER}}</title>
+  <script src="assets/js/tailwind.min.js"></script>
+  <link
+    href="https://fonts.googleapis.com/css2?family=Public+Sans:wght@400;700;900&family=Inter:wght@400;500;700;800&display=swap"
+    rel="stylesheet">
+  <style>
+    .receipt-canvas {
+      width: 100%;
+      max-width: 80mm;
+      background: #ffffff;
+      margin: 0 auto;
+      overflow: hidden;
+    }
+
+    @page {
+      margin: 0;
+    }
+
+    @media print {
+      html, body {
+        width: 80mm;
+        margin: 0;
+        padding: 0;
+        background: #fff;
+      }
+
+      .receipt-canvas {
+        width: 100%;
+        margin: 0;
+        padding: 2px !important;
+        box-shadow: none !important;
+        border: none !important;
+        max-width: none !important;
+      }
+
+      .no-print {
+        display: none !important;
+      }
+    }
+  </style>
+</head>
+
+<body class="bg-zinc-200 font-['Inter'] text-black antialiased">
+  <main class="receipt-canvas shadow-2xl">
+    <!-- Header -->
+    <header class="bg-white text-black font-['Public_Sans'] font-black tracking-tighter uppercase">
+      <div class="flex items-center justify-between px-2 w-full max-w-[80mm] mx-auto py-4">
+        <div class="flex flex-col items-start">
+          <span class="text-2xl font-black tracking-tighter leading-none">{{COMPANY_NAME}}</span>
+        </div>
+        <span class="text-xl leading-none">🧾</span>
+      </div>
+    </header>
+
+    <!-- Quick Info -->
+    <section class="bg-black text-white p-3 mb-4">
+      <div class="flex flex-col gap-1">
+        <span class="text-[10px] font-black tracking-widest uppercase">وصل رقم {{RECEIPT_NUMBER}}</span>
+        <span class="text-[10px] font-medium opacity-80">{{DATE}} | {{TIME}}</span>
+        <span class="text-[9px] font-bold opacity-90">الزبون: {{CLIENT_NAME}}</span>
+        <span class="text-[9px] font-bold opacity-90">البائع: {{SELLER_NAME}}</span>
+      </div>
+    </section>
+
+    <!-- Items -->
+    <section class="px-0 mb-6">
+      <div class="px-3 mb-2">
+        <h2 class="text-[10px] font-black uppercase tracking-widest text-black border-b border-zinc-200 pb-1">العناصر
+        </h2>
+      </div>
+      <div class="flex flex-col">
+        {{ITEMS_ROWS}}
+      </div>
+    </section>
+
+    <!-- Totals -->
+    <section class="px-3 mb-6">
+      <div class="flex flex-col gap-2">
+        <div class="flex justify-between text-[10px] font-bold uppercase tracking-tighter">
+          <span>المجموع</span>
+          <span>{{SUBTOTAL}}</span>
+        </div>
+        <div class="flex justify-between text-[10px] font-bold uppercase tracking-tighter text-zinc-500">
+          <span>التخفيض</span>
+          <span>-{{DISCOUNT}}</span>
+        </div>
+        <div class="bg-black text-white p-2 mt-1 flex justify-between items-center">
+          <span class="text-[10px] font-black tracking-widest uppercase">الصافي للدفع</span>
+          <span class="text-xl font-black tracking-tighter underline underline-offset-4">{{TOTAL}}</span>
+        </div>
+      </div>
+    </section>
+
+    <!-- Ledger -->
+    <section class="px-3 mb-8 space-y-4">
+      <div class="bg-zinc-100 p-3 space-y-3">
+        <div class="flex justify-between items-center border-b border-zinc-200 pb-2">
+          <span class="text-[9px] font-black uppercase opacity-60">الرصيد السابق</span>
+          <span class="text-[11px] font-bold">{{OLD_BALANCE}}</span>
+        </div>
+        <div class="flex justify-between items-center border-b border-zinc-200 pb-2">
+          <span class="text-[9px] font-black uppercase opacity-60">المتبقي للدفع</span>
+          <span class="text-[11px] font-bold">{{RECEIPT_REST}}</span>
+        </div>
+        <div class="flex justify-between items-center border-b border-zinc-200 pb-2">
+          <span class="text-[9px] font-black uppercase opacity-60">المدفوع</span>
+          <span class="text-[11px] font-black underline">{{PAID}}</span>
+        </div>
+        <div class="flex justify-between items-center pt-1">
+          <span class="text-[9px] font-black uppercase">إجمالي الديون</span>
+          <span class="text-[11px] font-black">{{REST}}</span>
+        </div>
+      </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="bg-black text-white block w-full p-4 mb-8">
+      <div class="w-full max-w-[80mm] mx-auto flex flex-col items-center space-y-4">
+        <div class="text-center space-y-1">
+          <p class="text-[12px] font-bold tracking-[0.2em] leading-tight">شكرا لتعاملك معنا</p>
+          <p class="text-[8px] font-medium opacity-60 tracking-widest">THANK YOU FOR YOUR BUSINESS</p>
+        </div>
+      </div>
+    </footer>
+  </main>
+</body>
+
+</html>

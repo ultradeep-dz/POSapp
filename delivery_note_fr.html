@@ -1,0 +1,158 @@
+<!DOCTYPE html>
+<html lang="fr" dir="ltr">
+
+<head>
+  <meta charset="utf-8">
+  <meta content="width=device-width, initial-scale=1.0" name="viewport">
+  <title>Bon de Livraison - {{DELIVERY_NUMBER}}</title>
+  <script src="assets/js/tailwind.min.js"></script>
+  <style data-purpose="typography">
+    body {
+      font-family: 'Cairo', sans-serif;
+      font-size: 11px;
+      color: #000;
+      background-color: #f3f4f6;
+    }
+
+    .font-serif-bold {
+      font-family: serif;
+      font-weight: bold;
+    }
+  </style>
+  <style data-purpose="layout-and-borders">
+    .delivery-container {
+      width: 210mm;
+      min-height: 297mm;
+      margin: 20px auto;
+      padding: 40px;
+      background: #fff;
+      box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+    }
+
+    .rounded-box {
+      border: 1.5px solid #000;
+      border-radius: 12px;
+      padding: 12px;
+    }
+
+    .table-border,
+    .table-border th,
+    .table-border td {
+      border: 1px solid #000;
+      border-collapse: collapse;
+    }
+
+    .table-border th {
+      padding: 6px 4px;
+      font-weight: bold;
+    }
+
+    .table-border td {
+      padding: 6px 4px;
+    }
+
+    @media print {
+      body {
+        background-color: #fff;
+        padding: 0;
+        margin: 0;
+      }
+
+      .delivery-container {
+        box-shadow: none;
+        margin: 0;
+        width: 100%;
+        min-height: auto;
+        padding: 20px;
+      }
+    }
+  </style>
+  <link href="assets/css/fonts.css" rel="stylesheet">
+</head>
+
+<body class="p-4">
+  <main class="delivery-container mx-auto bg-white" data-purpose="delivery-document">
+
+    <!-- Header Section -->
+    <header class="mb-8">
+      <h1 class="text-xl font-bold mb-1">{{COMPANY_NAME}}</h1>
+      <p class="font-bold text-[10px] mb-1">{{COMPANY_DESCRIPTION}}</p>
+      <p class="font-bold text-[10px] mb-1">{{COMPANY_ADDRESS}}</p>
+      <div class="flex flex-wrap gap-x-8 gap-y-1 mt-2 font-bold text-[10px]">
+        <div>Tél : {{COMPANY_PHONE}}</div>
+        <div>Tél Fixe : {{COMPANY_FAX}}</div>
+        <div>Email : {{COMPANY_EMAIL}}</div>
+      </div>
+      <div class="flex flex-wrap gap-x-8 gap-y-1 mt-1 font-bold text-[10px]">
+        <div>R.C : {{COMPANY_RC}}</div>
+        <div>NIF : {{COMPANY_NIF}}</div>
+        <div>AI : {{COMPANY_AI}}</div>
+      </div>
+      <div class="font-bold text-[10px] mt-1">NIS : {{COMPANY_NIS}}</div>
+    </header>
+
+    <!-- Client and Delivery Info -->
+    <section class="flex justify-between items-start mb-10" data-purpose="info-block">
+      <div class="w-[48%] rounded-box text-[10px] font-bold leading-relaxed">
+        <p>Client : {{PARTY_NAME}}</p>
+        <p>Adresse : {{PARTY_ADDRESS}}</p>
+        <p>R.C : {{PARTY_RC}}</p>
+        <p>NIF : {{PARTY_NIF}}</p>
+        <p>AI : {{PARTY_AI}}</p>
+        <p>NIS : {{PARTY_NIS}}</p>
+      </div>
+      <div class="w-[48%] text-right pr-8">
+        <h2 class="text-xl font-bold mb-2">BON DE LIVRAISON N° {{DELIVERY_NUMBER}}</h2>
+        <p class="text-sm font-bold">Date : {{DATE}}</p>
+        <p class="text-sm font-bold mt-1">N° de commande : {{ORDER_NUMBER}}</p>
+      </div>
+    </section>
+
+    <!-- Items Table -->
+    <section class="mb-8" data-purpose="items-table">
+      <table class="w-full table-border text-center text-[10px] font-bold">
+        <thead>
+          <tr class="bg-white">
+            <th class="w-[6%]">N°</th>
+            <th class="w-[14%]">Réf</th>
+            <th class="w-[30%]">Désignation</th>
+            <th class="w-[12%]">Unité</th>
+            <th class="w-[12%]">Quantité</th>
+            <th class="w-[26%]">Observations et réserves du client</th>
+          </tr>
+        </thead>
+        <tbody>
+          {{ITEMS_ROWS}}
+        </tbody>
+      </table>
+    </section>
+
+    <!-- Footer / Signature -->
+    <section class="flex justify-between items-start mt-12" data-purpose="signature-section">
+      <div class="w-[45%]">
+        <p class="font-bold text-[10px] mb-1">Expéditeur :</p>
+        <p class="font-bold text-[10px] mb-8">{{COMPANY_NAME}}</p>
+        <div class="border-t border-black w-3/4 pt-1">
+          <p class="text-[9px] font-bold text-slate-500">Signature et cachet</p>
+        </div>
+      </div>
+      <div class="w-[45%] text-right">
+        <p class="font-bold text-[10px] mb-1">Signature du client :</p>
+        <p class="font-bold text-[10px] mb-8">{{PARTY_NAME}}</p>
+        <div class="border-t border-black w-3/4 pt-1 ml-auto">
+          <p class="text-[9px] font-bold text-slate-500">Signature et cachet</p>
+        </div>
+      </div>
+    </section>
+
+  </main>
+  <script>
+    window.onload = function () {
+      if (window.location.search.includes('print=true')) {
+        setTimeout(() => { window.print(); }, 500);
+      }
+    }
+  </script>
+</body>
+
+</html>

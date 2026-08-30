@@ -1,0 +1,9 @@
+        "global_tax_percent": "Global Tax Percentage (VAT %)",
+        "search_name_barcode": "Search by name or barcode",
+        "offer_unlimited_help": "If left empty, the offer will be valid throughout the specified period regardless of sales."
+    }
+};
+
+if (typeof module !== 'undefined' && module.exports) {
+    module.exports = window.translations;
+}

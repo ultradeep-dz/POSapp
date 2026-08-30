@@ -1,0 +1,174 @@
+<!DOCTYPE html>
+<html lang="en" dir="ltr">
+
+<head>
+  <meta charset="utf-8">
+  <meta content="width=device-width, initial-scale=1.0" name="viewport">
+  <title>{{LBL_INVOICE_TITLE}} - {{INVOICE_NUMBER}}</title>
+  <script src="assets/js/tailwind.min.js"></script>
+  <style data-purpose="typography">
+    body {
+      font-family: 'Cairo', sans-serif;
+      font-size: 11px;
+      color: #000;
+      background-color: #f3f4f6;
+    }
+
+    .font-serif-bold {
+      font-family: serif;
+      font-weight: bold;
+    }
+  </style>
+  <style data-purpose="layout-and-borders">
+    .invoice-container {
+      width: 210mm;
+      min-height: 297mm;
+      margin: 20px auto;
+      padding: 40px;
+      background: #fff;
+      box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+    }
+
+    .rounded-box {
+      border: 1.5px solid #000;
+      border-radius: 12px;
+      padding: 12px;
+    }
+
+    .table-border,
+    .table-border th,
+    .table-border td {
+      border: 1px solid #000;
+      border-collapse: collapse;
+    }
+
+    .table-border th {
+      padding: 6px 4px;
+      font-weight: bold;
+    }
+
+    .table-border td {
+      padding: 6px 4px;
+    }
+
+    @media print {
+      body {
+        background-color: #fff;
+        padding: 0;
+        margin: 0;
+      }
+
+      .invoice-container {
+        box-shadow: none;
+        margin: 0;
+        width: 100%;
+        min-height: auto;
+        padding: 20px;
+      }
+    }
+  </style>
+  <link href="assets/css/fonts.css" rel="stylesheet">
+</head>
+
+<body class="p-4">
+  <main class="invoice-container mx-auto bg-white" data-purpose="invoice-document">
+
+    <!-- Header Section -->
+    <header class="mb-8">
+      <h1 class="text-xl font-bold mb-1">{{COMPANY_NAME}}</h1>
+      <p class="font-bold text-[10px] mb-1">{{COMPANY_DESCRIPTION}}</p>
+      <p class="font-bold text-[10px] mb-1">{{COMPANY_ADDRESS}}</p>
+      <div class="flex flex-wrap gap-x-8 gap-y-1 mt-2 font-bold text-[10px]">
+        <div>Phone : {{COMPANY_PHONE}}</div>
+        <div>Landline : {{COMPANY_FAX}}</div>
+        <div>Email : {{COMPANY_EMAIL}}</div>
+      </div>
+      <div class="flex flex-wrap gap-x-8 gap-y-1 mt-1 font-bold text-[10px]">
+        <div>CR : {{COMPANY_RC}}</div>
+        <div>TIN : {{COMPANY_NIF}}</div>
+        <div>AI : {{COMPANY_AI}}</div>
+      </div>
+      <div class="font-bold text-[10px] mt-1">NIS : {{COMPANY_NIS}}</div>
+    </header>
+
+    <!-- Client/Supplier and Invoice Info -->
+    <section class="flex justify-between items-start mb-10" data-purpose="info-block">
+      <div class="w-[48%] rounded-box text-[10px] font-bold leading-relaxed">
+        <p>{{CLIENT_ROLE_LABEL}} : {{PARTY_NAME}}</p>
+        <p>Address : {{PARTY_ADDRESS}}</p>
+        <p>CR : {{PARTY_RC}}</p>
+        <p>TIN : {{PARTY_NIF}}</p>
+        <p>AI : {{PARTY_AI}}</p>
+        <p>NIS : {{PARTY_NIS}}</p>
+      </div>
+      <div class="w-[48%] text-right pr-8">
+        <h2 class="text-xl font-bold mb-2">{{INVOICE_TYPE_LABEL}} No. {{INVOICE_NUMBER}}</h2>
+        <p class="text-sm font-bold">Date : {{DATE}}</p>
+      </div>
+    </section>
+
+    <!-- Items Table -->
+    <section class="mb-8" data-purpose="items-table">
+      <table class="w-full table-border text-center text-[10px] font-bold">
+        <thead>
+          <tr class="bg-white">
+            <th class="w-[6%]">No.</th>
+            <th class="w-[14%]">Ref</th>
+            <th class="w-[30%]">Description</th>
+            <th class="w-[10%]">Qty</th>
+            <th class="w-[10%]">Unit</th>
+            <th class="w-[10%]">Unit Price</th>
+            <th class="w-[10%]">VAT</th>
+            <th class="w-[10%]">Total Excl. VAT</th>
+          </tr>
+        </thead>
+        <tbody>
+          {{ITEMS_ROWS}}
+        </tbody>
+      </table>
+    </section>
+
+    <!-- Summary and Total -->
+    <section class="flex flex-col items-end mb-12" data-purpose="totals-section">
+      <div class="w-[42%] rounded-box font-bold text-[10px]">
+        <div class="flex justify-between py-1">
+          <span>Subtotal :</span>
+          <span>{{SUBTOTAL}}</span>
+        </div>
+        <div class="flex justify-between py-1">
+          <span>Discount :</span>
+          <span>{{DISCOUNT}}</span>
+        </div>
+        <div class="flex justify-between py-1">
+          <span>Total VAT :</span>
+          <span>{{TAX_TOTAL}}</span>
+        </div>
+        <div class="flex justify-between py-1 border-t border-black mt-1 pt-1">
+          <span>Net to pay :</span>
+          <span>{{TOTAL}}</span>
+        </div>
+      </div>
+    </section>
+
+    <!-- Footer -->
+    <section class="space-y-6" data-purpose="footer-details">
+      <div>
+        <p class="font-bold text-[10px] mb-1">Invoice fixed at the sum of :</p>
+        <p class="font-bold text-[10px]">{{TOTAL_IN_WORDS}}</p>
+      </div>
+      <div class="w-fit border border-black px-4 py-2 font-bold text-[10px]" data-purpose="payment-mode">
+        Payment Mode : {{PAYMENT_MODE}}
+      </div>
+    </section>
+
+  </main>
+  <script>
+    window.onload = function () {
+      if (window.location.search.includes('print=true')) {
+        setTimeout(() => { window.print(); }, 500);
+      }
+    }
+  </script>
+</body>
+
+</html>

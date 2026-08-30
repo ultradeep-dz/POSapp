@@ -1,0 +1,151 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+
+<head>
+    <meta charset="UTF-8">
+    <title>تفعيل نظام Lumina POS</title>
+    <style>
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: #f4f7f6;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            margin: 0;
+        }
+
+        .activation-box {
+            background: white;
+            padding: 40px;
+            border-radius: 12px;
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+            text-align: center;
+            width: 100%;
+            max-width: 400px;
+        }
+
+        h2 {
+            color: #2c3e50;
+            margin-bottom: 10px;
+        }
+
+        p {
+            color: #7f8c8d;
+            font-size: 14px;
+            margin-bottom: 25px;
+        }
+
+        input {
+            width: 90%;
+            padding: 12px;
+            border: 1px solid #bdc3c7;
+            border-radius: 6px;
+            font-size: 16px;
+            text-align: center;
+            letter-spacing: 2px;
+            text-transform: uppercase;
+            margin-bottom: 20px;
+        }
+
+        button {
+            background: #3498db;
+            color: white;
+            border: none;
+            padding: 12px 25px;
+            font-size: 16px;
+            border-radius: 6px;
+            cursor: pointer;
+            width: 100%;
+            transition: 0.3s;
+        }
+
+        button:hover {
+            background: #2980b9;
+        }
+
+        #message {
+            margin-top: 15px;
+            font-size: 14px;
+            font-weight: bold;
+        }
+
+        .error {
+            color: #e74c3c;
+        }
+
+        .success {
+            color: #2ecc71;
+        }
+
+        .hwid-box {
+            margin-top: 20px;
+            font-size: 11px;
+            color: #aaa;
+            text-align: left;
+            direction: ltr;
+            word-break: break-all;
+        }
+    </style>
+</head>
+
+<body>
+
+    <div class="activation-box">
+        <h2>تفعيل النظام</h2>
+        <p>الرجاء إدخال كود التفعيل الخاص بنسختك للبدء في استخدام النظام.</p>
+
+        <input type="text" id="code" placeholder="XXXX-XXXX-XXXX-XXXX" autocomplete="off">
+        <button id="activateBtn" onclick="activate()">تفعيل البرنامج</button>
+
+        <div id="message"></div>
+
+        <div class="hwid-box">
+            معرف الجهاز: <span id="hwidDisplay">جاري القراءة...</span>
+        </div>
+    </div>
+
+    <script>
+        // إظهار المعرف الخاص بالجهاز في الشاشة ليتمكن العميل من تزويدك به إذا لزم الأمر
+        document.getElementById('hwidDisplay').innerText = window.activationAPI.getHWID();
+
+        async function activate() {
+            const codeInput = document.getElementById('code').value.trim();
+            const msgDiv = document.getElementById('message');
+            const btn = document.getElementById('activateBtn');
+
+            if (!codeInput) {
+                msgDiv.className = 'error';
+                msgDiv.innerText = 'يرجى إدخال كود التفعيل!';
+                return;
+            }
+
+            btn.disabled = true;
+            btn.innerText = 'جاري التفعيل...';
+            msgDiv.innerText = '';
+
+            try {
+                // إرسال الكود إلى main.js عبر contextBridge
+                const response = await window.activationAPI.activateSoftware(codeInput);
+
+                if (response.success) {
+                    msgDiv.className = 'success';
+                    msgDiv.innerText = 'تم التفعيل بنجاح! جاري تشغيل النظام...';
+                } else {
+                    msgDiv.className = 'error';
+                    msgDiv.innerText = response.message || 'فشل التفعيل. تأكد من الكود.';
+                    btn.disabled = false;
+                    btn.innerText = 'تفعيل البرنامج';
+                }
+            } catch (error) {
+                msgDiv.className = 'error';
+                msgDiv.innerText = 'حدث خطأ في النظام.';
+                btn.disabled = false;
+                btn.innerText = 'تفعيل البرنامج';
+            }
+        }
+    </script>
+
+</body>
+
+</html>
